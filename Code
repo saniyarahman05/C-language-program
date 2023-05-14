@@ -1,0 +1,63 @@
+void add_employee() {
+    struct Employee emp;
+    printf("Enter employee name: ");
+    scanf("%s", emp.name);
+    printf("Enter employee ID: ");
+    scanf("%d", &emp.id);
+    printf("Enter employee position: ");
+    scanf("%s", emp.position);
+    printf("Enter employee salary: ");
+    scanf("%f", &emp.salary);
+    employees[num_employees++] = emp;
+}
+
+void display_all_employees() {
+    if (num_employees == 0) {
+        printf("No employees in the system.\n");
+        return;
+    }
+    printf("Employee records:\n");
+    for (int i = 0; i < num_employees; i++) {
+        printf("Name: %s\n", employees[i].name);
+        printf("ID: %d\n", employees[i].id);
+        printf("Position: %s\n", employees[i].position);
+        printf("Salary: %.2f\n", employees[i].salary);
+    }
+}
+int find_employee_by_id(int id) {
+    for (int i = 0; i < num_employees; i++) {
+        if (employees[i].id == id) {
+            return i;
+        }
+    }
+    return -1;
+}
+void modify_employee() {
+    int id;
+    printf("Enter employee ID to modify: ");
+    scanf("%d", &id);
+    int index = find_employee_by_id(id);
+    if (index == -1) {
+        printf("No employee found with that ID.\n");
+        return;
+    }
+    printf("Enter new name (or press enter to keep current name): ");
+    char temp_name[50];
+    scanf("%s", temp_name);
+    if (strlen(temp_name) > 0) {
+        strcpy(employees[index].name, temp_name);
+    }
+    printf("Enter new position (or press enter to keep current position): ");
+    char temp_position[50];
+    scanf("%s", temp_position);
+    if (strlen(temp_position) > 0) {
+        strcpy(employees[index].position, temp_position);
+    }
+    printf("Enter new salary (or enter 0 to keep current salary): ");
+    float temp_salary;
+    scanf("%f", &temp_salary);
+    if (temp_salary > 0) {
+        employees[index].salary = temp_salary;
+    }
+    printf("Employee record updated.\n");
+}
